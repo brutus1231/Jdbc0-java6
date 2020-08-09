@@ -20,7 +20,7 @@ public class DepartmentDaoImpl {
         }
     }
 
-    void insert(String name){
+    void insert(String name) {
         try (final Connection connection = getConnection()) {
             insertOne(connection, name);
         } catch (SQLException exp) {
@@ -29,7 +29,7 @@ public class DepartmentDaoImpl {
     }
 
     private void insertOne(Connection connection, String name) throws SQLException {
-        String query = "insert into department(name) values ?";
+        String query = "insert into department(name) values (?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();

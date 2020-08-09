@@ -7,7 +7,9 @@ public class Main {
         Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         DepartmentDaoImpl departmentDao = new DepartmentDaoImpl();
         //departmentDao.printAll();
+        //departmentDao.printOne(2);
 
-        departmentDao.printOne(2);
+        departmentDao.insert("Nowy departament");
+        departmentDao.printAll();
     }
 }
