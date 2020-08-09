@@ -1,9 +1,6 @@
 package pl.sda.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DepartmentDaoImpl {
 
@@ -19,7 +16,16 @@ public class DepartmentDaoImpl {
         Statement statement = connection.createStatement();
         String query = "select * from department";
         statement.execute(query);
+        ResultSet resultSet = statement.getResultSet();
+        printResult(resultSet);
+    }
 
+    private void printResult(ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
+            int departmentId = resultSet.getInt("department_id");
+            String departmentName = resultSet.getString("name");
+            System.out.println("id: " + departmentId + " name: " + departmentName);
+        }
     }
 
     private Connection getConnection() throws SQLException {
