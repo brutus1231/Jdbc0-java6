@@ -12,6 +12,23 @@ public class DepartmentDaoImpl {
         }
     }
 
+    void printOne(Integer departmentId) {
+        try (final Connection connection = getConnection()) {
+            printOneDepartment(connection, departmentId);
+        } catch (SQLException exp) {
+            System.out.println("Błąd połączenia " + exp.getMessage());
+        }
+    }
+
+    private void printOneDepartment(Connection connection, Integer departmentId) throws SQLException {
+        String query = "select * from department where department_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, departmentId);
+        preparedStatement.execute();
+        ResultSet resultSet = preparedStatement.getResultSet();
+        printResult(resultSet);
+    }
+
     private void printAllData(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
         String query = "select * from department";
@@ -29,7 +46,7 @@ public class DepartmentDaoImpl {
     }
 
     private Connection getConnection() throws SQLException {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/zad0";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/zad0?autoReconnect=true&useSSL=false&serverTimezone=UTC";
         return DriverManager.getConnection(jdbcUrl, "scott", "scott");
     }
 }
