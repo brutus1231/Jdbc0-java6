@@ -6,6 +6,8 @@ public class Main {
             ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         DepartmentDaoImpl departmentDao = new DepartmentDaoImpl();
-        departmentDao.printAll();
+        //departmentDao.printAll();
+
+        departmentDao.printOne(2);
     }
 }

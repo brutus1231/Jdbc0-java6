@@ -20,6 +20,22 @@ public class DepartmentDaoImpl {
         }
     }
 
+    void insert(String name){
+        try (final Connection connection = getConnection()) {
+            insertOne(connection, name);
+        } catch (SQLException exp) {
+            System.out.println("Błąd połączenia " + exp.getMessage());
+        }
+    }
+
+    private void insertOne(Connection connection, String name) throws SQLException {
+        String query = "insert into department(name) values ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+
     private void printOneDepartment(Connection connection, Integer departmentId) throws SQLException {
         String query = "select * from department where department_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
